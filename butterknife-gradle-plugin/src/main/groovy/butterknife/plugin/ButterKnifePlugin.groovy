@@ -27,7 +27,8 @@ public class ButterKnifePlugin implements Plugin<Project> {
       variants.all { BaseVariant variant ->
         variant.outputs.each { BaseVariantOutput output ->
           output.processResources.doLast {
-            File rDir = new File(sourceOutputDir, packageForR.replaceAll('\\.', File.separator))
+            File rDir = new File(sourceOutputDir, packageForR.replaceAll('\\.',
+                    "\\".equals(File.separator) ? "\\\\" : File.separator))
             File R = new File(rDir, 'R.java')
             FinalRClassBuilder.brewJava(R, sourceOutputDir, packageForR, 'R2')
           }
